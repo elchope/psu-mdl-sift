@@ -10,59 +10,53 @@
 #include "cv.h"
 #include "highgui.h"
 
+// Namespace for CPP API
 using namespace cv;
 
 int main()
 {
-	Mat img;
-	Mat img_rotate;
-	Mat dst;
-	Mat big;
-	Mat small;
+	IplImage* img = 0;
+	IplImage* img_rotate = 0;
+	IplImage* dst = 0;
+	IplImage* big = 0;
+	IplImage* small = 0;
 	int height;
 	int width;
 	int step;
 	int channels;
 
 	// Read image & 
-	img = imread("./cat.jpg");
-	printf("Dims: %d \n", img.dims);
-	printf("Row & Col: %d x %d \n", img.rows, img.cols);
+	img = cvLoadImage("./cat.jpg");
+	height = img-> height;
+	width = img-> width;
+	printf("Row & Col: %d x %d \n", height, width);
 
-	if (img.rows >= img.cols) {
-		height = img.rows;
-		width = img.rows * 2 + 100;
-	}
-	else {
-		height = img.cols;
-		width = img.cols * 2 + 100;
-	}
-		
-	dst = img.t();
-	big = Mat(height, width, img.type());
-	big = Scalar(110, 10, 50);
-	small = big(Rect(0, 0, img.rows, img.cols));
-	img.copyTo(small);
-	//img.copyTo((big(Range(0, img.rows), Range(0, img.cols))));
-	//dst.copyTo(big.colRange(img.cols+100, img.cols+100+dst.cols));
-	
-	// ---------- Another way to rotate at arbitirary angle ---------- 
-	//Point2f img_center(img.rows/2.0F, img.cols/2.0F);
-	//img_rotate = getRotationMatrix2D(img_center, 90, 1.0);
-	//warpAffine(img, dst, img_rotate, img.size());
-	// ---------------------------------------------------------------
-	printf("Dims: %d \n", dst.dims);
-	printf("Size of image: %d x %d \n", dst.rows, dst.cols);
+	//Rotate image, for other angle refer to cvWarpAffine, cv2DRotationMatrix
+	CvSize img_size;
+	img_size.width = height;
+	img_size.height = width;
+	int flipmode;
+	img_rotate = cvCreateImage(img_size, img-> depth, img-> nChannels);
+	// clockwise 90 degree
+	cvTranspose(img, img_rotate);
+	flipmode = 1;
+	cvFlip(img_rotate, img_rotate, flipmode);	
+	// counter-clockwise 90 degree
+	//cvTranspose(img, img_rotate);
+	//flipmode = -1;
+	//cvFlip(img_rotate, img_rotate, flipmode);	
+	 
+
 	
 	// Create a window
-	namedWindow("my_cat", CV_WINDOW_AUTOSIZE);	
-	imshow("my_cat", big);
-	//namedWindow("small", CV_WINDOW_AUTOSIZE);	
-	//imshow("small", small);
+	cvNamedWindow("my_cat", CV_WINDOW_AUTOSIZE);	
+	cvShowImage("my_cat", img);
+	cvNamedWindow("rotate", CV_WINDOW_AUTOSIZE);	
+	cvShowImage("rotate", img_rotate);
 
-	waitKey(0);
-	img.release();
-	dst.release();
+	cvWaitKey(0);
+	cvReleaseImage(&img);
+	cvReleaseImage(&img_rotate);
 	return 0;
 }
 
