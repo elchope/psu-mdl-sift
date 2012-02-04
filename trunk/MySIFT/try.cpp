@@ -1,17 +1,8 @@
 /****************************************************** 
  *	Code by Yang Xiao
  ******************************************************/
-
 // try.cpp : Read and rotate the original image and display them.
-//
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include "cv.h"
-#include "highgui.h"
-
-// Namespace for CPP API
-using namespace cv;
+#include "try.h"
 
 int main()
 {
@@ -49,12 +40,8 @@ int main()
 
 	
 	// Create a window
-	cvNamedWindow("my_cat", CV_WINDOW_AUTOSIZE);	
-	cvShowImage("my_cat", img);
-	cvNamedWindow("rotate", CV_WINDOW_AUTOSIZE);	
-	cvShowImage("rotate", img_rotate);
+	cvShowManyImages("Cats", 2, img, img_rotate);
 
-	cvWaitKey(0);
 	cvReleaseImage(&img);
 	cvReleaseImage(&img_rotate);
 	return 0;
