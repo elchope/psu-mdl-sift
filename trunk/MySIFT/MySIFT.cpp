@@ -21,15 +21,27 @@
 int main()
 {
 	// Create an instance of SIFT
-	SIFT *sift = new SIFT("./cat2.jpg", 4, 2);
+	SIFT *sift_1 = new SIFT("./cat.jpg", 4, 2);
+	SIFT *sift_2 = new SIFT("./cat_2.jpg", 4, 2);
+	
+	IplImage* img_org = 0;
+	IplImage* img_rotate = 0;
+	
+	sift_1->DoSift();					// Find keypoints
+	sift_1->ShowAbsSigma();				// Display the sigma table
+	img_org = sift_1->ReturnKeypoints();	// Show the keypoints
 
-	sift->DoSift();				// Find keypoints
-	sift->ShowAbsSigma();		// Display the sigma table
-	sift->ShowKeypoints();		// Show the keypoints
-	cvWaitKey(0);				// Wait for a keypress
-
+	sift_2->DoSift();					// Find keypoints
+	sift_2->ShowAbsSigma();				// Display the sigma table
+	img_rotate = sift_2->ReturnKeypoints();	// Show the keypoints
+	
+	cvShowManyImages("Cats", 2, img_org, img_rotate);	
+	
 	// Cleanup and exit
-	delete sift;
+	delete sift_1;
+	delete sift_2;
+	cvReleaseImage(&img_org);
+	cvReleaseImage(&img_rotate);
 	return 0;
 }
 

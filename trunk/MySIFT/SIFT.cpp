@@ -1017,6 +1017,22 @@ void SIFT::ShowKeypoints()
 	cvShowImage("Keypoints", img);
 }
 
+// ReturnKeypoints()
+// Return the image with the drawed features
+IplImage* SIFT::ReturnKeypoints()
+{
+	IplImage* img = cvCloneImage(m_srcImage);
+
+	for(int i=0;i<m_numKeypoints;i++)
+	{
+		Keypoint kp = m_keyPoints[i];
+
+		cvLine(img, cvPoint(kp.xi, kp.yi), cvPoint(kp.xi, kp.yi), CV_RGB(255,255,255), 3);
+		cvLine(img, cvPoint(kp.xi, kp.yi), cvPoint(kp.xi+10*cos(kp.orien[0]), kp.yi+10*sin((double)kp.orien[0])), CV_RGB(255,255,255), 1);
+	}
+	return img;
+}
+
 // ShowAbsSigma()
 // This function shows the sigmas used for various images.
 void SIFT::ShowAbsSigma()
