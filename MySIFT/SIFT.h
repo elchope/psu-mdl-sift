@@ -13,6 +13,10 @@
 #include "KeyPoint.h"
 #include "Descriptor.h"
 
+// Function decleration
+void cvShowManyImages(char* title, int nArgs, ...);
+
+// Class decleration
 class SIFT
 {
 public:
@@ -23,6 +27,7 @@ public:
 	void DoSift();
 
 	void ShowKeypoints();
+	IplImage* ReturnKeypoints();
 	void ShowAbsSigma();
 
 private:

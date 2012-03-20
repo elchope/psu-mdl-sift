@@ -14,8 +14,8 @@ cvShowManyImages.o: cvShowManyImages.cpp
 try.o: try.cpp
 	$(CC) $(CFLAGS) $(CFLAGS_OPENCV) try.cpp 
 
-demo: MySIFT.o SIFT.o 
-	$(CC) $(LIBS_OPENCV) MySIFT.o SIFT.o -o demo
+demo: MySIFT.o SIFT.o cvShowManyImages.o 
+	$(CC) $(LIBS_OPENCV) MySIFT.o SIFT.o cvShowManyImages.o -o demo
 
 MySIFT.o: MySIFT.cpp
 	$(CC) $(CFLAGS) $(CFLAGS_OPENCV) MySIFT.cpp
