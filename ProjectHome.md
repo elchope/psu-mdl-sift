@@ -1,0 +1,1 @@
+Software implementation of SIFT algorithm with object recognition.
